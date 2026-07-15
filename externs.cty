@@ -1,0 +1,27 @@
+//functy:extern
+
+// The sqid functions, provided in Go by sqid-cty-funcs (GetSqidFunctions). This file
+// declares their signatures only — it is never compiled, and nothing here is callable.
+//
+// It exists because cty cannot express what they accept. sqid()'s first argument is a
+// union — a single number, or a list of numbers — and cty has no union type, so its
+// metadata can only say "dynamic". And both functions take an optional trailing options
+// object, which the only way cty offers to make an argument optional — a variadic —
+// leaves shapeless: nothing in the metadata says it holds alphabet, min_length, and
+// blocklist. The union is declared below as one form per arm, and the options object is
+// spelled out attribute by attribute.
+//
+// The names are deliberately un-namespaced: sqid()/unsqid() are an encode/decode codec
+// pair (like base64encode/base64decode), sqid() reads as "make a sqid", and unsqid() is
+// its plain inverse.
+
+// Encode one or more non-negative integers into a sqid string. From a single number, the
+// sqid encodes just that; from a list, it encodes the sequence, and unsqid() recovers it
+// in order.
+func sqid(id: number, options?: object({ alphabet = optional(string), min_length = optional(number), blocklist = optional(list(string)) })) -> string
+func sqid(ids: list(number), options?: object({ alphabet = optional(string), min_length = optional(number), blocklist = optional(list(string)) })) -> string
+
+// Decode a sqid string back into its list of non-negative integers, empty for input the
+// options do not recognise. Pass the same options sqid() encoded with — a sqid is only
+// meaningful against the alphabet and min_length that produced it.
+func unsqid(s: string, options?: object({ alphabet = optional(string), min_length = optional(number), blocklist = optional(list(string)) })) -> list(number)

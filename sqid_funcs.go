@@ -19,6 +19,7 @@ var SqidFunc = function.New(&function.Spec{
 			Name:             "id",
 			Type:             cty.DynamicPseudoType,
 			AllowDynamicType: true,
+			Description:      "A non-negative integer, or a list of them, to encode",
 		},
 	},
 	VarParam: &function.Parameter{
@@ -26,6 +27,7 @@ var SqidFunc = function.New(&function.Spec{
 		Type:             cty.DynamicPseudoType,
 		AllowDynamicType: true,
 		AllowNull:        true,
+		Description:      "Optional object (at most one): alphabet (string), min_length (0–255), blocklist (list of strings)",
 	},
 	Type: func(args []cty.Value) (cty.Type, error) {
 		if len(args) > 2 {
@@ -97,13 +99,14 @@ var SqidFunc = function.New(&function.Spec{
 var UnsqidFunc = function.New(&function.Spec{
 	Description: "Decodes a sqid string into a list of non-negative integers; returns an empty list for invalid input",
 	Params: []function.Parameter{
-		{Name: "s", Type: cty.String},
+		{Name: "s", Type: cty.String, Description: "The sqid string to decode"},
 	},
 	VarParam: &function.Parameter{
 		Name:             "options",
 		Type:             cty.DynamicPseudoType,
 		AllowDynamicType: true,
 		AllowNull:        true,
+		Description:      "Optional object (at most one) matching the options sqid() encoded with: alphabet, min_length, blocklist",
 	},
 	Type: func(args []cty.Value) (cty.Type, error) {
 		if len(args) > 2 {

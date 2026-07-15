@@ -75,6 +75,28 @@ id = sqid(1, { blocklist = [] })
 id = sqid(1, { min_length = 8, alphabet = "abcdefghijklmnopqrstuvwxyz0123456789" })
 ```
 
+## Signature declarations
+
+The signatures these functions really have are not the ones cty can express. `sqid`'s
+first argument is a **union** — a single number, or a list of numbers — and cty has no
+union type, so its metadata can only say `dynamic`. And both functions take an **optional
+options object**, which the only way cty offers to make an argument optional — a variadic
+— leaves shapeless: nothing in the metadata says it holds `alphabet`, `min_length`, and
+`blocklist`.
+
+So `externs.cty` declares the real signatures as [functy](https://github.com/tsarna/functy)
+`//functy:extern` declarations — the union as one form per arm, the options object spelled
+out attribute by attribute. The file is never compiled and declares nothing callable; it
+exists so `help()`, generated documentation, and editor tooling can show what the metadata
+cannot. `Externs()` returns it as opaque bytes — this package does not import functy:
+
+```go
+parser.RegisterExterns(sqidcty.Externs(), sqidcty.ExternsFilename)
+```
+
+A host that is not a functy host can ignore it; the cty `Description` on every function
+and parameter is still populated.
+
 ## Notes
 
 - Numbers must be non-negative integers. Floats or negative values produce an error.
