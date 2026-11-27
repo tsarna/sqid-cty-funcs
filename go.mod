@@ -1,3 +1,4 @@
+// Deprecated: merged into github.com/tsarna/ctyx as github.com/tsarna/ctyx/sqidcty.
 module github.com/tsarna/sqid-cty-funcs
 
 go 1.25.8

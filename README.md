@@ -1,5 +1,13 @@
 # sqid-cty-funcs
 
+> [!WARNING]
+> **Moved.** This package is now `github.com/tsarna/ctyx/sqidcty`, part of
+> [ctyx](https://github.com/tsarna/ctyx) — nine cty helper modules merged into
+> one. The code and API are unchanged; only the import path moved. This
+> repository is archived and frozen at v0.3.0.
+>
+> `go get github.com/tsarna/ctyx`
+
 A Go module providing [sqids](https://sqids.org) encode/decode functions for use in [go-cty](https://github.com/zclconf/go-cty) / HCL2 evaluation contexts.
 
 Sqids are short, URL-safe IDs generated from numbers. They are reversible and can encode one or more non-negative integers into a compact string.
